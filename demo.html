@@ -1,0 +1,25 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta http-equiv="content-type" content="text/html; charset=utf-8">
+	
+		<title>Growl Demo</title>
+		<script type="text/javascript" charset="utf-8" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.js"></script>
+		<script type="text/javascript" charset="utf-8" src="growl.js"></script>
+		<script type="text/javascript" charset="utf-8">
+			$(document).ready(function(){
+				var dummyText = [];
+				dummyText.push("if you're planning on getting married, please note - 1. you have nothing to do with it 2. it'll take 6 months of your life anyway. :S");
+				dummyText.push("t's a pretty neat quick tip that shows you how to add a meta tag that will auto-refresh your browser ever few seconds, for dev purposes.");
+				dummyText.push("Many people say we aren't innovating any more. We are innovating more than ever before. Internet has made the world a small village.");
+
+				$("button").click(function(){
+					$.growl.show( {msg: dummyText[Math.floor(Math.random() * dummyText.length)] });
+				});
+			});
+		</script>
+	</head>
+	<body>
+		<button>Show Growl</button>
+	</body>
+</html>
