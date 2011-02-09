@@ -1,0 +1,42 @@
+/**
+ * Growl
+ */
+ 
+div.growl-container{
+    position: absolute;
+    top: 10px;
+    right: 10px;
+} 
+
+div.growl{
+    font: 13px/17px Helvetica;
+	background-color:#222;
+	color:#fff;
+    float: right;
+    clear: both;
+    margin:10px;
+	padding:5px 10px;
+	width:300px;
+	z-index: 999999;
+	opacity:0.95;
+	-webkit-border-radius:10px;
+	-moz-border-radius:10px;
+	border-radius:10px;
+	position: relative;
+}
+
+div.growl a.growl-close-icon{
+    position: absolute;
+    right: 8px;
+    top: 8px;
+    z-index: 100;
+    color: #aaa;
+    text-decoration: none;
+    padding: 0;
+    margin: 0;
+    line-height: 7px;
+}
+
+div.growl p.growl-content{
+    margin: 5px 10px 5px 5px;
+}

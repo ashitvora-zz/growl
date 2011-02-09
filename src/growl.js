@@ -1,98 +1,74 @@
-/*
- * Javascript Growl
- * version 0.1
+/**
+ * Mac-like Growl
+ * version 0.2
  *
  * MIT License
  *
  * Ashit Vora (a.k.vora@gmail.com)
- * 06/17/2010
+ * Tested on jQuery 1.5
  *
- * Displays Growl like notification
+ * Usage
  *
- * Depends on jQuery 1.4.2 or higher
- *
- * Usage: 
- *
- * $.growl.show({ msg: "Message to display", timeOut: "some value after which growl will disappear. leave it blank to keep it always visible" });
+ *  $.growl.show({ 
+ *    msg: "Message to display", 
+ *    sticky: if TRUE, don't auto hide. else hide after 10 seconds
+ *  });
  *
  */
 
 
 (function($, undefined){
+    var growl = $("<div class='growl'><a class='growl-close-icon' href='javascript:void(0);'>x</a><p class='growl-content'></p></div>"),
+        growlContainer = $("<div class='growl-container'></div>"),
+        timeOut = 10000;
 	
-	$.growl = {
-		
-		init : function(){
-			
-			//add the basic container to the body
-			$growl = $("<div>");
+	$.growl = function(){};
+	
+	$.growl.init = function(){
+	    growlContainer.appendTo("body");
 
-			//beautify it
-			$growl.css({
-				"cursor" : "pointer",
-				"right":0,
-				"float" : "right",
-				"clear" : "both",
-				"width":"300px",
-				"zIndex": "999999",
-				"fontSize" : "13px",
-				"fontFamily": "'Lucida Grande', 'Tahoma', 'verdana', Arial",
-				"backgroundColor":"#222",
-				"color":"#fff",
-				"margin":"10px",
-				"padding":"15px",
-				"borderRadius":"10px",
-				"-webkitBorderRadius":"10px",
-				"-mozBorderRadius":"10px",
-				"opacity":"0.95"
-			});
-			
-		},
-		
-		
-		//show the growl
-		show : function() {
-			
-			var msg = arguments[0].msg !== undefined ? $.trim(arguments[0].msg) : "",
-				
-				//if timeout is Passed, use it. else dont hide it
-				timeOut = arguments[0].timeOut !== undefined && ! isNaN(parseInt(arguments[0].timeOut, 10)) ? arguments[0].timeOut : 0;
-
-			
-			if( msg.length > 0 ){
-				
-				//clone it and append it to the body
-				var newGrowl = $growl.clone();
-				newGrowl.html( msg ).show().appendTo("body");
-				newGrowl.click(function(){
-					newGrowl.hide();
-				});
-				
-				if(timeOut > 0){
-					
-					setTimeout(function(){
-						newGrowl.hide();
-					}, timeOut);
-
-				}
-				
-			}
-		},
-
-
-		//Hide the growl
-		hide: function(){
-			this.fadeOut(function(){
-				this.remove();
-			});
-		}
+	    growl.find("a.growl-close-icon").bind("click", function(){
+			$(this).closest("div.growl").fadeOut().remove();
+		});
 	};
 	
+	
+		
+	//show the growl
+	$.growl.show = function(config) {
+			
+		var msg    = config.msg !== "undefined" ? $.trim(config.msg) : "",
+			sticky = config.sticky !== "undefined" && config.sticky === true;
+		
+		if( msg.length > 0 ){
+			
+			//clone it and append it to the body
+			var newGrowl = growl.clone(true);
+			
+			newGrowl.appendTo(growlContainer);
+			newGrowl.find('.growl-content').html(msg);
+			
+			if(! sticky){	
+				setTimeout(function(){
+					newGrowl.hide();
+				}, timeOut);
+			}
+			
+		}
+	};
 
-	//initialize it when document is loaded
-	$("document").ready(function(){
-		$.growl.init();
-	});
+
+
+	//Hide the growl
+	$.growl.hide = function(){
+		this.fadeOut(function(){
+			this.remove();
+		});
+	};
 	
 	
+	
+	$(document).ready(function(){
+        $.growl.init();     
+    });
 })(jQuery);
