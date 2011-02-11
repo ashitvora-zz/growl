@@ -50,7 +50,7 @@
 			
 			if(! sticky){	
 				setTimeout(function(){
-					newGrowl.hide();
+					newGrowl.remove();
 				}, timeOut);
 			}
 			
@@ -61,9 +61,7 @@
 
 	//Hide the growl
 	$.growl.hide = function(){
-		this.fadeOut(function(){
-			this.remove();
-		});
+		this.remove();
 	};
 	
 	
